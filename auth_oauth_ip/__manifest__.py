@@ -16,6 +16,7 @@
     ],
     "external_dependencies": {"python": [], "bin": []},
     "data": [
+        "security/ir.model.access.csv",
         "views.xml",
     ],
     "qweb": [
