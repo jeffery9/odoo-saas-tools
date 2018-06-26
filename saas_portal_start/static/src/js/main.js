@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 
     /* ======== START TRIAL WIDGET ======== */
-    var plan_id = $("input[name='plan_id']").attr('value');
+    var plan_id = $("input[name='plan_id']").attr('value') || 0 ;
     var base_saas_domain = $("input[name='base_saas_domain']").attr('value');
 
     var db_sel = 'input.odoo_db_name';
