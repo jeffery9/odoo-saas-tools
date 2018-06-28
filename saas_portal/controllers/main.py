@@ -90,7 +90,7 @@ class SaasPortal(http.Controller):
             domain = [('state', '=', 'confirmed')]
             plans = request.env['saas_portal.plan'].search(domain)
             if plans:
-                plan_id = plans[0]
+                plan_id = plans[0].id
             else:
                 raise exceptions.Warning(_('There is no plan configured'))
         return plan_obj.sudo().browse(plan_id)
