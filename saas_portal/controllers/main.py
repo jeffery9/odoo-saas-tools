@@ -99,11 +99,18 @@ class SaasPortal(http.Controller):
         full_dbname = self.get_full_dbname(dbname)
         return odoo.service.db.exp_db_exist(full_dbname)
 
-    @http.route(['/publisher-warranty/'], type='http', auth='public', website=True)
+    @http.route(['/publisher-warranty/'], type='http', auth='public', cors='*', csrf=False)
     def publisher_warranty(self, **post):
         # check addons/mail/update.py::_get_message for arg0 value
         arg0 = post.get('arg0')
         if arg0:
             arg0 = literal_eval(arg0)
+
+        client_id = request.env['saas_portal.client'].sudo().search([('client_id','=', arg0['dbuuid'])], limit=1)
+        enterprise_info = {
+        'expiration_date' :  client_id.expiration_datetime,
+        'expiration_reason' : client_id.trial and 'Trial' or 'Production',
+        'enterprise_code' :  'LICENSECODE'
+        }
         messages = []
-        return simplejson.dumps({'messages': messages})
+        return simplejson.dumps({'messages': messages, 'enterprise_info': enterprise_info})
